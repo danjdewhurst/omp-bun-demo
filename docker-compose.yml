@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+
+  omp-server:
+    build: .
+    container_name: omp-server
+    depends_on:
+      - redis
+    ports:
+      - "7777:7777/udp"
+    volumes:
+      # Mount config for easy editing without rebuild
+      - ./config.json:/opt/omp-server/config.json
+      # Mount scriptfiles for persistent data
+      - ./scriptfiles:/opt/omp-server/scriptfiles
+      # Mount gamemodes for development
+      - ./gamemodes:/opt/omp-server/gamemodes
+      # Mount filterscripts for development (note: .amx must be compiled in container)
+      - ./filterscripts:/opt/omp-server/filterscripts
+      # Mount Bun bridge source for hot development
+      - ./bun-bridge/src:/opt/omp-server/bun-bridge/src
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

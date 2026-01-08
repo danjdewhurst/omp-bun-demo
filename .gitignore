@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+bun-bridge/node_modules/
+
+# Compiled Pawn scripts
+*.amx
+
+# Logs
+*.log
+log.txt
+
+# Server data
+scriptfiles/*.db
+scriptfiles/*.ini
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
