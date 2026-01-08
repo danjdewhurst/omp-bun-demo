@@ -7,9 +7,9 @@ A hybrid game server architecture for [open.mp](https://open.mp) (Open Multiplay
 This project demonstrates a novel approach to SA-MP/open.mp server development: game events are captured in Pawn and forwarded to a Bun TypeScript runtime via Redis pub/sub, allowing you to write modern, type-safe game logic while maintaining full compatibility with existing Pawn scripts.
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────┐
 │                      Docker Environment                          │
-│                                                                   │
+│                                                                  │
 │  ┌──────────────────┐              ┌──────────────────────────┐  │
 │  │                  │    Redis     │                          │  │
 │  │    omp-server    │◄────────────►│      Bun Runtime         │  │
@@ -22,9 +22,9 @@ This project demonstrates a novel approach to SA-MP/open.mp server development: 
 │  │  └────────────┘  │              │  │  • Async/await     │  │  │
 │  │                  │              │  └────────────────────┘  │  │
 │  └──────────────────┘              └──────────────────────────┘  │
-│           ▲                                                       │
-│           │ UDP :7777                                             │
-└───────────┼───────────────────────────────────────────────────────┘
+│           ▲                                                      │
+│           │ UDP :7777                                            │
+└───────────┼──────────────────────────────────────────────────────┘
             │
         Players
 ```
@@ -59,15 +59,15 @@ The server will be available on `localhost:7777`.
 
 ## Server Commands
 
-| Command | Description |
-|---------|-------------|
-| `./server.sh start` | Start the server (Redis + omp-server + Bun) |
-| `./server.sh stop` | Stop all containers |
-| `./server.sh restart` | Restart the server |
-| `./server.sh rebuild` | Rebuild Docker image and start |
-| `./server.sh logs` | Follow server logs |
-| `./server.sh status` | Show container status |
-| `./server.sh attach` | Attach to server console |
+| Command               | Description                                 |
+| --------------------- | ------------------------------------------- |
+| `./server.sh start`   | Start the server (Redis + omp-server + Bun) |
+| `./server.sh stop`    | Stop all containers                         |
+| `./server.sh restart` | Restart the server                          |
+| `./server.sh rebuild` | Rebuild Docker image and start              |
+| `./server.sh logs`    | Follow server logs                          |
+| `./server.sh status`  | Show container status                       |
+| `./server.sh attach`  | Attach to server console                    |
 
 ## Writing Game Logic
 
@@ -82,7 +82,7 @@ const omp = new OpenMP();
 omp.on("OnPlayerConnect", async (event) => {
   await omp.player.sendMessage(
     event.playerid,
-    0x00FF00FF,
+    0x00ff00ff,
     `Welcome, ${event.name}!`
   );
   await omp.player.giveMoney(event.playerid, 5000);
@@ -111,44 +111,44 @@ await omp.start();
 
 ### Player API (`omp.player.*`)
 
-| Method | Description |
-|--------|-------------|
-| `sendMessage(playerid, color, message)` | Send a chat message |
-| `setHealth(playerid, health)` | Set player health |
-| `setArmour(playerid, armour)` | Set player armour |
-| `giveWeapon(playerid, weaponid, ammo)` | Give a weapon |
-| `giveMoney(playerid, amount)` | Give money |
-| `setPosition(playerid, x, y, z)` | Teleport player |
-| `showDialog(playerid, dialogid, options)` | Show a dialog |
-| `gameText(playerid, text, time, style)` | Show game text |
+| Method                                    | Description         |
+| ----------------------------------------- | ------------------- |
+| `sendMessage(playerid, color, message)`   | Send a chat message |
+| `setHealth(playerid, health)`             | Set player health   |
+| `setArmour(playerid, armour)`             | Set player armour   |
+| `giveWeapon(playerid, weaponid, ammo)`    | Give a weapon       |
+| `giveMoney(playerid, amount)`             | Give money          |
+| `setPosition(playerid, x, y, z)`          | Teleport player     |
+| `showDialog(playerid, dialogid, options)` | Show a dialog       |
+| `gameText(playerid, text, time, style)`   | Show game text      |
 
 ### Vehicle API (`omp.vehicle.*`)
 
-| Method | Description |
-|--------|-------------|
-| `create(options)` | Create a vehicle |
-| `destroy(vehicleid)` | Destroy a vehicle |
-| `setHealth(vehicleid, health)` | Set vehicle health |
-| `repair(vehicleid)` | Repair a vehicle |
-| `setPosition(vehicleid, x, y, z)` | Move a vehicle |
-| `changeColor(vehicleid, color1, color2)` | Change colors |
+| Method                                   | Description        |
+| ---------------------------------------- | ------------------ |
+| `create(options)`                        | Create a vehicle   |
+| `destroy(vehicleid)`                     | Destroy a vehicle  |
+| `setHealth(vehicleid, health)`           | Set vehicle health |
+| `repair(vehicleid)`                      | Repair a vehicle   |
+| `setPosition(vehicleid, x, y, z)`        | Move a vehicle     |
+| `changeColor(vehicleid, color1, color2)` | Change colors      |
 
 ### Benchmark API (`omp.benchmark.*`)
 
-| Method | Description |
-|--------|-------------|
-| `runAll(iterations)` | Run all benchmarks |
+| Method                      | Description                |
+| --------------------------- | -------------------------- |
+| `runAll(iterations)`        | Run all benchmarks         |
 | `pingRoundTrip(iterations)` | Measure round-trip latency |
 
 ## In-Game Commands
 
-| Command | Description |
-|---------|-------------|
-| `/help` | Show available commands |
-| `/heal` | Restore health to 100 |
-| `/armour` | Restore armour to 100 |
-| `/car [model]` | Spawn a vehicle |
-| `/benchmark [n]` | Run IPC benchmarks |
+| Command          | Description             |
+| ---------------- | ----------------------- |
+| `/help`          | Show available commands |
+| `/heal`          | Restore health to 100   |
+| `/armour`        | Restore armour to 100   |
+| `/car [model]`   | Spawn a vehicle         |
+| `/benchmark [n]` | Run IPC benchmarks      |
 
 ## Project Structure
 
@@ -177,6 +177,7 @@ omp-bun-demo/
 See [benchmarks.md](benchmarks.md) for detailed performance measurements.
 
 **Summary (Docker/emulated):**
+
 - Round-trip latency: ~5ms
 - Throughput: ~200 ops/sec
 
@@ -209,6 +210,7 @@ Server settings are in `config.json`:
 ### Adding New Commands
 
 1. Add the command handler in `bridge.pwn`:
+
 ```pawn
 else if (!strcmp(command, "MyCommand"))
 {
@@ -218,6 +220,7 @@ else if (!strcmp(command, "MyCommand"))
 ```
 
 2. Add the type definition in `bun-bridge/src/types/commands.ts`:
+
 ```typescript
 MyCommand: {
   args: [arg: number];
@@ -230,6 +233,7 @@ MyCommand: {
 ### Adding New Events
 
 1. Forward the event in `bridge.pwn`:
+
 ```pawn
 public OnMyEvent(playerid)
 {
